@@ -2,8 +2,29 @@ import { Menu } from 'antd';
 import Sider from 'antd/es/layout/Sider';
 import { sideBarItemGenerator } from '../../utils/sideBarItemGenerator';
 import { adminPath } from '../../routes/admin.routes';
+import { facultyPath } from '../../routes/faculty.routes';
+import { studentPath } from '../../routes/student.routes';
 
+const userRole = {
+  ADMIN:'admin',
+  FACULTY:'faculty',
+  STUDENT:'student',
+}
 const SideBar = () => {
+  const role = 'faculty';
+  let sidebarItem;
+
+  switch(role){
+    case userRole.ADMIN:sidebarItem = sideBarItemGenerator(adminPath, userRole.ADMIN);
+    break;
+    case userRole.FACULTY:sidebarItem = sideBarItemGenerator(facultyPath, userRole.FACULTY);
+    break;
+    case userRole.STUDENT:sidebarItem = sideBarItemGenerator(studentPath, userRole.STUDENT);
+    break;
+
+    default:
+      break;
+  }
     return (
         <Sider
         breakpoint="lg"
@@ -27,7 +48,7 @@ const SideBar = () => {
 
         ><h1>PH UNI</h1>
          </div>
-        <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']} items={sideBarItemGenerator(adminPath, "admin")} />
+        <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']} items={sidebarItem} />
       </Sider>
     );
 };
